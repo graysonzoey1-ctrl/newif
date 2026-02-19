@@ -46,8 +46,8 @@ export default function SidebarNavigation() {
     { label: 'Fundraise', href: '/fundraise' },
     
     // MEDIA & EVENTS
-    { label: 'Media & Events', href: '/news', isSection: true },
-    { label: 'News & Blog', href: '/news' },
+    { label: 'Media & Events', href: '/news', isSection: true, id: 'section-media' },
+    { label: 'News & Blog', href: '/news', id: 'news-blog' },
     { label: 'Events', href: '/events' },
     { label: 'Gallery', href: '/gallery' },
     
@@ -55,8 +55,8 @@ export default function SidebarNavigation() {
     { label: 'Contact', href: '/contact' },
     
     // LEGAL
-    { label: 'Legal', href: '/privacy-policy', isSection: true },
-    { label: 'Privacy Policy', href: '/privacy-policy' },
+    { label: 'Legal', href: '/privacy-policy', isSection: true, id: 'section-legal' },
+    { label: 'Privacy Policy', href: '/privacy-policy', id: 'privacy-policy' },
     { label: 'Terms & Conditions', href: '/terms-conditions' },
     { label: 'Accessibility', href: '/accessibility' },
   ];
@@ -105,8 +105,8 @@ export default function SidebarNavigation() {
 
         {/* Menu Items - Scrollable Area */}
         <ul className="flex-1 overflow-y-auto px-4 space-y-0.5 pb-24">
-          {menuItems.map((item) => (
-            <li key={item.href}>
+          {menuItems.map((item, index) => (
+            <li key={item.id ?? `${item.href}-${index}`}>
               <Link
                 href={item.href}
                 onClick={handleNavClick}
