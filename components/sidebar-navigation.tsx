@@ -1,97 +1,90 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Menu, X } from 'lucide-react';
 
-interface NavSection {
-  sectionLabel?: string;
-  items: { label: string; href: string }[];
+/* ── Brand Palette ────────────────────────────────────── */
+const SIDEBAR_BG = '#0B1C2D';
+const ACCENT_GOLD = '#D4AF37';
+
+/* ── Navigation Data ──────────────────────────────────── */
+interface NavChild {
+  label: string;
+  href: string;
 }
 
-const navSections: NavSection[] = [
+interface NavGroup {
+  /** Non-clickable section header. Omit for standalone items. */
+  groupLabel?: string;
+  children: NavChild[];
+}
+
+const navigation: NavGroup[] = [
   {
-    items: [{ label: 'Home', href: '/' }],
+    children: [{ label: 'Home', href: '/' }],
   },
   {
-    sectionLabel: 'Who We Are',
-    items: [
+    groupLabel: 'WHO WE ARE',
+    children: [
+      { label: 'Who We Are', href: '/who-we-are' },
       { label: 'About NEWIF', href: '/about-newif' },
       { label: 'Vision, Mission & Values', href: '/vision-mission-values' },
-      { label: 'Leadership', href: '/leadership' },
+      { label: 'Leadership & Governance', href: '/governance-leadership' },
       { label: 'Our Team', href: '/our-team' },
-      { label: 'Governance', href: '/governance' },
-      { label: 'Safeguarding', href: '/safeguarding-protection' },
+    ],
+  },
+  {
+    children: [{ label: 'What We Do', href: '/programs-overview' }],
+  },
+  {
+    children: [{ label: 'Our Impact', href: '/impact-statistics' }],
+  },
+  {
+    children: [{ label: 'Programs', href: '/programs-overview' }],
+  },
+  {
+    children: [{ label: 'Media & Events', href: '/news' }],
+  },
+  {
+    children: [
       { label: 'Transparency & Accountability', href: '/transparency-accountability' },
     ],
   },
   {
-    sectionLabel: 'What We Do',
-    items: [
-      { label: 'Programs Overview', href: '/programs-overview' },
-      { label: 'Women Empowerment', href: '/women-empowerment' },
-      { label: 'Disability Inclusion', href: '/disability-inclusion' },
-      { label: 'Child Protection & Education', href: '/child-protection-education' },
-      { label: 'Community Development', href: '/community-development' },
+    children: [{ label: 'Safeguarding', href: '/safeguarding-protection' }],
+  },
+  {
+    children: [{ label: 'Membership', href: '/membership' }],
+  },
+  {
+    children: [
+      { label: 'Partnership & Collaboration', href: '/corporate-partners' },
     ],
   },
   {
-    sectionLabel: 'Our Impact',
-    items: [
-      { label: 'Impact Statistics', href: '/impact-statistics' },
-      { label: 'Stories & Testimonials', href: '/stories-testimonials' },
-    ],
+    children: [{ label: 'Volunteer', href: '/volunteer' }],
   },
   {
-    sectionLabel: 'Partnerships',
-    items: [
-      { label: 'Corporate Partners', href: '/corporate-partners' },
-      { label: 'NGO & Government Partners', href: '/ngo-government-partners' },
-    ],
+    children: [{ label: 'Donate', href: '/donate' }],
   },
   {
-    sectionLabel: 'Get Involved',
-    items: [
-      { label: 'Membership', href: '/membership' },
-      { label: 'Volunteer', href: '/volunteer' },
-      { label: 'Donate', href: '/donate' },
-      { label: 'Fundraise', href: '/fundraise' },
-    ],
-  },
-  {
-    sectionLabel: 'Media & Events',
-    items: [
-      { label: 'News & Blog', href: '/news' },
-      { label: 'Events', href: '/events' },
-      { label: 'Gallery', href: '/gallery' },
-    ],
-  },
-  {
-    items: [{ label: 'Contact', href: '/contact' }],
-  },
-  {
-    sectionLabel: 'Legal',
-    items: [
-      { label: 'Privacy Policy', href: '/privacy-policy' },
-      { label: 'Terms & Conditions', href: '/terms-conditions' },
-      { label: 'Accessibility', href: '/accessibility' },
-    ],
+    children: [{ label: 'Contact', href: '/contact' }],
   },
 ];
 
+/* ── Component ────────────────────────────────────────── */
 export default function SidebarNavigation() {
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleNavClick = () => {
-    setIsOpen(false);
-  };
+  const close = useCallback(() => setIsOpen(false), []);
 
   return (
     <>
-      {/* Hamburger Button */}
+      {/* Hamburger toggle */}
       <button
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => setIsOpen((o) => !o)}
         className="fixed left-4 top-4 z-50 p-2 text-white hover:text-accent transition-colors drop-shadow-lg"
         aria-label="Toggle menu"
       >
@@ -102,18 +95,18 @@ export default function SidebarNavigation() {
       {isOpen && (
         <div
           className="fixed inset-0 bg-black/50 z-40"
-          onClick={() => setIsOpen(false)}
+          onClick={close}
         />
       )}
 
-      {/* Sidebar - Full Height Flex Container */}
+      {/* Sidebar panel */}
       <nav
         className={`fixed left-0 top-0 h-screen w-64 text-white z-40 transform transition-transform duration-500 ease-in-out flex flex-col ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
-        style={{ backgroundColor: '#0B1C2D' }}
+        style={{ backgroundColor: SIDEBAR_BG }}
       >
-        {/* Logo - Fixed at Top */}
+        {/* Logo */}
         <div className="pt-28 px-4 pb-8 flex-shrink-0 flex items-center justify-center">
           <Image
             src="/newif-official-logo.png"
@@ -125,24 +118,30 @@ export default function SidebarNavigation() {
           />
         </div>
 
-        {/* Menu Items - Scrollable Area */}
-        <ul className="flex-1 overflow-y-auto px-4 space-y-0.5 pb-24">
-          {navSections.map((section, sectionIndex) => (
-            <li key={`section-${sectionIndex}`}>
-              {section.sectionLabel && (
-                <span className="block px-4 py-2.5 rounded-lg text-xs font-semibold text-accent mt-5 mb-2.5 uppercase tracking-widest">
-                  {section.sectionLabel}
+        {/* Scrollable nav list */}
+        <ul className="flex-1 overflow-y-auto px-4 pb-24">
+          {navigation.map((group, gi) => (
+            <li key={`grp-${gi}`} className={group.groupLabel ? 'mt-5' : ''}>
+              {/* Non-clickable section header */}
+              {group.groupLabel && (
+                <span
+                  className="block px-4 py-2.5 text-xs font-semibold uppercase tracking-widest mb-2.5"
+                  style={{ color: ACCENT_GOLD }}
+                >
+                  {group.groupLabel}
                 </span>
               )}
-              <ul className="space-y-0.5">
-                {section.items.map((item, itemIndex) => (
-                  <li key={`${item.href}-${itemIndex}`}>
+
+              {/* Clickable child links */}
+              <ul>
+                {group.children.map((child, ci) => (
+                  <li key={`nav-${child.href}-${gi}-${ci}`}>
                     <Link
-                      href={item.href}
-                      onClick={handleNavClick}
+                      href={child.href}
+                      onClick={close}
                       className="block px-4 py-2.5 rounded-lg text-sm text-gray-100 transition-colors duration-200 hover:bg-accent/20 hover:text-accent"
                     >
-                      {item.label}
+                      {child.label}
                     </Link>
                   </li>
                 ))}
@@ -151,19 +150,19 @@ export default function SidebarNavigation() {
           ))}
         </ul>
 
-        {/* Join Now Button - Sticky at Bottom */}
+        {/* Sticky bottom button */}
         <div
           className="flex-shrink-0 sticky bottom-0 left-0 right-0 px-4 py-5"
           style={{
-            backgroundColor: '#0B1C2D',
-            borderTop: '1px solid rgba(212, 175, 55, 0.2)',
+            backgroundColor: SIDEBAR_BG,
+            borderTop: `1px solid rgba(212, 175, 55, 0.2)`,
           }}
         >
           <Link
             href="/membership"
-            onClick={handleNavClick}
+            onClick={close}
             className="block w-full text-center py-3 rounded-lg font-bold transition-all duration-200 shadow-md hover:shadow-lg"
-            style={{ backgroundColor: '#D4AF37', color: '#0B1C2D' }}
+            style={{ backgroundColor: ACCENT_GOLD, color: SIDEBAR_BG }}
           >
             Join Now
           </Link>

@@ -25,7 +25,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={montserrat.variable} suppressHydrationWarning>
       <body className="font-sans antialiased" suppressHydrationWarning>
-        <SidebarNavigation />
+        <SidebarNavigation key="sidebar-v2" />
         {children}
         <Footer />
       </body>
