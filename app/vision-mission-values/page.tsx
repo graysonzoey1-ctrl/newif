@@ -26,8 +26,14 @@ export default function VisionMissionValues() {
                 <h2 className="text-3xl md:text-4xl font-medium text-white mb-8">
                   Our Vision
                 </h2>
+                <p className="text-lg md:text-xl text-white leading-relaxed font-light mb-6">
+                  {'To build a just, inclusive, and empowered society where women, children, persons with disabilities, and vulnerable populations are given equal opportunity to thrive, lead, and transform their communities.'}
+                </p>
+                <p className="text-lg md:text-xl text-white leading-relaxed font-light mb-6">
+                  {'NEWIF envisions a future where empowerment is not charity but structure \u2014 where systems are intentionally designed to protect the vulnerable, elevate women into leadership, and unlock the full human potential across Ghana and beyond.'}
+                </p>
                 <p className="text-lg md:text-xl text-white leading-relaxed font-light">
-                  A world where women, children, and persons with disabilities are empowered to reach their full potential, contribute meaningfully to their communities, and live with dignity, security, and equal opportunities.
+                  {'We believe that when women rise, families stabilize. When children are protected, nations prosper. When persons with disabilities are included, society becomes stronger and more innovative.'}
                 </p>
               </div>
             </div>
@@ -44,8 +50,21 @@ export default function VisionMissionValues() {
               <h2 className="text-5xl md:text-5xl font-bold mb-12 max-w-2xl" style={{ color: '#0B1F3A' }}>
                 Our Mission
               </h2>
+              <p className="text-lg md:text-xl leading-relaxed font-light max-w-2xl mb-6" style={{ color: '#333333' }}>
+                {'Network Empowerment for Women International Force (NEWIF) exists to design and implement practical empowerment systems that create measurable social impact.'}
+              </p>
+              <p className="text-lg md:text-xl leading-relaxed font-light max-w-2xl mb-6" style={{ color: '#333333' }}>
+                {'Our mission is to:'}
+              </p>
+              <ul className="text-lg md:text-xl leading-relaxed font-light max-w-2xl mb-6 list-disc list-inside text-right" style={{ color: '#333333' }}>
+                <li>{'Equip women with economic tools, leadership training, and entrepreneurial support'}</li>
+                <li>{'Advocate for disability inclusion and structural accessibility'}</li>
+                <li>{'Protect and support vulnerable children and families'}</li>
+                <li>{'Deliver community-based empowerment programs across regions'}</li>
+                <li>{'Build partnerships that scale sustainable development initiatives'}</li>
+              </ul>
               <p className="text-lg md:text-xl leading-relaxed font-light max-w-2xl" style={{ color: '#333333' }}>
-                To empower women, children, and persons with disabilities through comprehensive education, vocational training, advocacy, and action-oriented development programs that create sustainable pathways for socio-economic growth and community transformation.
+                {'We operate through structured programs, strategic partnerships, policy engagement, and grassroots action to ensure empowerment is practical, measurable, and sustainable.'}
               </p>
             </div>
           </div>
