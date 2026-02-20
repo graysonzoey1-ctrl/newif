@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import Image from "next/image"
+/* next/image removed — using plain <img> to avoid hydration + aspect-ratio warnings */
 import { usePathname } from "next/navigation"
 
 /* ── Brand palette ─────────────────────────────────────── */
@@ -99,14 +99,12 @@ export default function SidebarNavigation() {
             onClick={close}
             className="block transition-all duration-200 hover:brightness-125 hover:drop-shadow-[0_0_8px_rgba(212,175,55,0.5)]"
           >
-            <Image
+            <img
               src="/newif-official-logo.png"
               alt="NEWIF Logo"
               width={140}
               height={60}
-              style={{ width: "auto", height: "auto" }}
               className="object-contain max-w-[140px] max-h-[60px]"
-              priority
             />
           </Link>
         </div>
