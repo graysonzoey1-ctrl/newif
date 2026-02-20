@@ -104,7 +104,8 @@ export default function SidebarNavigation() {
               alt="NEWIF Logo"
               width={140}
               height={60}
-              className="object-contain"
+              style={{ width: "auto", height: "auto" }}
+              className="object-contain max-w-[140px] max-h-[60px]"
               priority
             />
           </Link>
