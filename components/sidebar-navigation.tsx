@@ -2,36 +2,21 @@
 
 import { useState } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { usePathname } from "next/navigation"
 
 /* ── Brand palette ─────────────────────────────────────── */
 const NAVY = "#0B1F3A"
 const GOLD = "#D4AF37"
-const PINK = "#E91E63"
 
-/* ── Navigation data ───────────────────────────────────── */
-interface NavItem {
-  label: string
-  href: string
-}
-
-interface NavGroup {
-  sectionLabel: string
-  items: NavItem[]
-}
-
-const navigation: (NavItem | NavGroup)[] = [
+/* ── Flat navigation list — every item is a direct link ── */
+const navLinks = [
   { label: "Home", href: "/" },
-  {
-    sectionLabel: "WHO WE ARE",
-    items: [
-      { label: "About NEWIF", href: "/about-newif" },
-      { label: "Vision, Mission & Values", href: "/vision-mission-values" },
-      { label: "Leadership", href: "/leadership" },
-      { label: "Our Team", href: "/our-team" },
-      { label: "Governance", href: "/governance" },
-    ],
-  },
+  { label: "About NEWIF", href: "/about-newif" },
+  { label: "Vision, Mission & Values", href: "/vision-mission-values" },
+  { label: "Leadership", href: "/leadership" },
+  { label: "Our Team", href: "/our-team" },
+  { label: "Governance", href: "/governance" },
   { label: "What We Do", href: "/what-we-do" },
   { label: "Our Impact", href: "/our-impact" },
   { label: "Programs", href: "/programs" },
@@ -44,12 +29,7 @@ const navigation: (NavItem | NavGroup)[] = [
   { label: "Volunteer", href: "/volunteer" },
   { label: "Donate", href: "/donate" },
   { label: "Contact", href: "/contact" },
-]
-
-/* ── Type guard ────────────────────────────────────────── */
-function isGroup(entry: NavItem | NavGroup): entry is NavGroup {
-  return "sectionLabel" in entry
-}
+] as const
 
 /* ── Component ─────────────────────────────────────────── */
 export default function SidebarNavigation() {
@@ -69,18 +49,27 @@ export default function SidebarNavigation() {
         style={{ backgroundColor: open ? NAVY : "transparent" }}
         aria-label={open ? "Close menu" : "Open menu"}
       >
-        <span className="block w-6 h-0.5 rounded-full transition-all duration-300" style={{
-          backgroundColor: open ? GOLD : NAVY,
-          transform: open ? "rotate(45deg) translate(4px, 4px)" : "none",
-        }} />
-        <span className="block w-6 h-0.5 rounded-full transition-all duration-300" style={{
-          backgroundColor: open ? GOLD : NAVY,
-          opacity: open ? 0 : 1,
-        }} />
-        <span className="block w-6 h-0.5 rounded-full transition-all duration-300" style={{
-          backgroundColor: open ? GOLD : NAVY,
-          transform: open ? "rotate(-45deg) translate(4px, -4px)" : "none",
-        }} />
+        <span
+          className="block w-6 h-0.5 rounded-full transition-all duration-300"
+          style={{
+            backgroundColor: open ? GOLD : NAVY,
+            transform: open ? "rotate(45deg) translate(4px, 4px)" : "none",
+          }}
+        />
+        <span
+          className="block w-6 h-0.5 rounded-full transition-all duration-300"
+          style={{
+            backgroundColor: open ? GOLD : NAVY,
+            opacity: open ? 0 : 1,
+          }}
+        />
+        <span
+          className="block w-6 h-0.5 rounded-full transition-all duration-300"
+          style={{
+            backgroundColor: open ? GOLD : NAVY,
+            transform: open ? "rotate(-45deg) translate(4px, -4px)" : "none",
+          }}
+        />
       </button>
 
       {/* Overlay */}
@@ -100,57 +89,35 @@ export default function SidebarNavigation() {
           transform: open ? "translateX(0)" : "translateX(-100%)",
         }}
       >
-        {/* Logo area */}
-        <div className="px-6 pt-20 pb-6 border-b" style={{ borderColor: "rgba(212,175,55,0.15)" }}>
-          <Link href="/" onClick={close} className="text-xl font-bold tracking-wider" style={{ color: GOLD }}>
-            NEWIF
+        {/* Logo area — centered image linking to homepage */}
+        <div
+          className="flex items-center justify-center px-6 pt-20 pb-6 border-b"
+          style={{ borderColor: "rgba(212,175,55,0.15)" }}
+        >
+          <Link
+            href="/"
+            onClick={close}
+            className="block transition-all duration-200 hover:brightness-125 hover:drop-shadow-[0_0_8px_rgba(212,175,55,0.5)]"
+          >
+            <Image
+              src="/newif-official-logo.png"
+              alt="NEWIF Logo"
+              width={140}
+              height={60}
+              className="object-contain"
+              priority
+            />
           </Link>
         </div>
 
-        {/* Nav items */}
+        {/* Flat nav links — no section headers, all unique keys */}
         <ul className="flex-1 overflow-y-auto px-4 py-4 space-y-0.5">
-          {navigation.map((entry, gi) => {
-            if (isGroup(entry)) {
-              return (
-                <li key={`grp-${gi}`} className="pt-5 pb-1">
-                  {/* Non-clickable section label */}
-                  <span
-                    className="block px-4 py-2 text-xs font-bold tracking-widest uppercase select-none"
-                    style={{ color: GOLD, opacity: 0.7 }}
-                  >
-                    {entry.sectionLabel}
-                  </span>
-                  <ul className="space-y-0.5">
-                    {entry.items.map((child, ci) => {
-                      const active = pathname === child.href
-                      return (
-                        <li key={`nav-${child.href}-${gi}-${ci}`}>
-                          <Link
-                            href={child.href}
-                            onClick={close}
-                            className="block px-4 py-2.5 rounded-lg text-sm transition-colors duration-200"
-                            style={{
-                              color: active ? GOLD : "rgba(255,255,255,0.8)",
-                              backgroundColor: active ? "rgba(212,175,55,0.1)" : "transparent",
-                              fontWeight: active ? 600 : 400,
-                              paddingLeft: "2rem",
-                            }}
-                          >
-                            {child.label}
-                          </Link>
-                        </li>
-                      )
-                    })}
-                  </ul>
-                </li>
-              )
-            }
-
-            const active = pathname === entry.href
+          {navLinks.map((item, index) => {
+            const active = pathname === item.href
             return (
-              <li key={`nav-${entry.href}-${gi}`}>
+              <li key={`sidebar-${item.href}-${index}`}>
                 <Link
-                  href={entry.href}
+                  href={item.href}
                   onClick={close}
                   className="block px-4 py-2.5 rounded-lg text-sm transition-colors duration-200"
                   style={{
@@ -159,12 +126,27 @@ export default function SidebarNavigation() {
                     fontWeight: active ? 600 : 400,
                   }}
                 >
-                  {entry.label}
+                  {item.label}
                 </Link>
               </li>
             )
           })}
         </ul>
+
+        {/* Join Now button */}
+        <div className="px-6 py-6 border-t" style={{ borderColor: "rgba(212,175,55,0.15)" }}>
+          <Link
+            href="/membership"
+            onClick={close}
+            className="block w-full py-3 rounded-lg text-center text-sm font-semibold tracking-wide transition-colors duration-200"
+            style={{
+              backgroundColor: GOLD,
+              color: NAVY,
+            }}
+          >
+            Join Now
+          </Link>
+        </div>
       </nav>
     </>
   )
