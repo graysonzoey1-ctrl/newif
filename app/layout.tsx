@@ -2,7 +2,7 @@ import type React from "react"
 import type { Metadata } from "next"
 import { Montserrat } from "next/font/google"
 import "./globals.css"
-import SidebarNavigation from "@/components/sidebar-navigation"
+import SidebarNavigation from "@/components/sidebar-nav"
 import Footer from "@/components/footer"
 
 const montserrat = Montserrat({
@@ -25,7 +25,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={montserrat.variable} suppressHydrationWarning>
       <body className="font-sans antialiased" suppressHydrationWarning>
-        <SidebarNavigation key="sidebar-v2" />
+        <SidebarNavigation />
         {children}
         <Footer />
       </body>
