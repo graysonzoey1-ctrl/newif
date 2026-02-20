@@ -20,6 +20,7 @@ const navSections: NavSection[] = [
       { label: 'About NEWIF', href: '/about-newif' },
       { label: 'Vision, Mission & Values', href: '/vision-mission-values' },
       { label: 'Our Team', href: '/leadership-team' },
+      { label: 'Leadership', href: '/leadership' },
       { label: 'Leadership & Governance', href: '/governance-leadership' },
       { label: 'Safeguarding', href: '/safeguarding-protection' },
       { label: 'Transparency & Accountability', href: '/transparency-accountability' },
