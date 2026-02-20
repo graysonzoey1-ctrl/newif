@@ -67,7 +67,7 @@ export default function VisionMissionValues() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {values.map((value, i) => (
                 <div 
-                  key={i} 
+                  key={`${value.title}-${i}`} 
                   className="bg-white p-8 rounded-2xl shadow-sm hover:shadow-lg transition-shadow"
                 >
                   <h3 className="text-2xl font-bold mb-4" style={{ color: value.color }}>

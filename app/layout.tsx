@@ -23,8 +23,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${montserrat.variable}`}>
-      <body className="font-sans antialiased">
+    <html lang="en" className={montserrat.variable} suppressHydrationWarning>
+      <body className="font-sans antialiased" suppressHydrationWarning>
         <SidebarNavigation />
         {children}
         <Footer />
