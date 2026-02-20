@@ -17,7 +17,6 @@ const navSections: NavSection[] = [
   {
     sectionLabel: 'Who We Are',
     items: [
-      { label: 'Who We Are', href: '/who-we-are' },
       { label: 'About NEWIF', href: '/about-newif' },
       { label: 'Vision, Mission & Values', href: '/vision-mission-values' },
       { label: 'Leadership', href: '/leadership' },
